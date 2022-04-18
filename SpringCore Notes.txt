@@ -100,3 +100,4 @@ IN THE CONFIGUATION CLASS:
 @ComponentScan(basePackages = "the package you want to search for the methods that return objects")
 NOTE: we can omit the use of the @ComponentScan if we use @Bean annotation
  @Bean : use this on the method that return the objects, those objects than will be used by the IOC container
+=~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
