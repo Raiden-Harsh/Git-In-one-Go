@@ -1,0 +1,89 @@
+---------SPRING CORE BASICS-----------------
+POM.XML	> This is the XML file that contains all the dependencies.
+	  for spring core we only need two(no additional namespace is required!)
+		> spring-core
+		> spring-context
+-> we have a simple student class, with it's getter and setters
+CONFIG.xml > This is the config file in which we will be declaring our beans
+						 beans are simply the objects of the classes!
+Different methods to give create a bean
+#1 With property tag
+<bean class="complete class name with package" name="name of the bean">
+	<property name="attribute of the class">
+		<value>whatever value </value>
+	</property>
+	</bean>
+#2 With P schema
+<bean class="complete class name with package" name="name of bean"
+			p:classAttribute = "value" />
+Main Function > To get beans form the IOC container -
+								Make an object of ClassPathXmlApplicationContext
+								ApplicationContext context = new ClassPathXmlApplicationContext("full address of the config.xml file");
+							> to get the bean
+								Class obj = (Class)context.getBean("Name of the bean");
+								note: typecasting is required as the .getBean() method return Object type!
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------AUTO WIRING---------------------------------------------------------------------------------------------------------------
+	Auto wiring simply means to provide the object of one class to another automatically
+	there are two types of autowiring 1)byname 2)autowire annotations.
+	#1 autowire by Name: in this method we will use config.xml file to autowire
+	ex:
+		<bean class="full class name" name="name of bean" autowire="byName" />
+		here IOC will look all the classes in the same package with the attribute
+		whose name is same as the bean declared in the config.xml file
+		and it will auto inject the object in the automatic created object of the dependent bean!
+
+	#2 autowire by annotations: we have to use the @Autowired annotations to tell IOC what to inject,
+	NOTE: we have to use this tag to enable all the annotations!
+				<context:annotation-config />
+
+				> we simply add @Autowired on the dependent class for auto injecting the required bean.
+				NOTE: we have to declare the bean of the dependent class in the config.xml file!
+				NOTE: A dependent class is one which need an bean/object of anther class to work properly!
+				@Qulaifier("name of bean") :: this is used with @Autowired when there is more than one bean of same type
+				NOTE: in place of name of bean give the name of that bean whose object you want to inject
+------------------------------------------------------------------------------------------------------------------------------------------------------
+WE CAN USE CONSTRUCTORS TO DECLARE BEANS:
+NOTE: while using the property value method we are using the getters and setters.
+<bean class="package + class name" name="name of the bean" >
+	<constructor-arg value="value of the attributes">
+</bean>
+NOTE: we can also use type to specify the constructor (constructor overloading)
+NOTE: we can use index to specify which order to add the attributes
+<bean class="package + className" name="beanName">
+  	<constructor-arg value="12" type="int" index="1">
+		<constructor-arg value="22" type="int" index="0">
+</bean>
+=~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
+This is how we add COLLECTIONS while declaring the bean
+There are 3 type of collections:
+	#1 List : can have duplicate values
+	#2 Set : don't have duplicate values
+	#3 Map : they are key-value pairs
+
+	LIST:
+	<bean class="" name="">
+		<property name="name of the attribute">
+			<list>
+				<value>12345<value>
+				<null/>(we can add null as this)
+			</list>
+		</property>
+	SET:
+	<bean class="" name="">
+		<property name="">
+			<set>
+				<value>what ever </value>
+			</set>
+		</property>
+	</bean>
+	MAP:
+	<bean class="" name="">
+		<property name="">
+			<map>
+				<entry key="" value=""/>
+			</map>
+		</property>
+	</bean>
+=~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
+WE CAN ALSO CONFIGURE BY USING THE JAVA CLASS AS THE CONFIG CLASS
