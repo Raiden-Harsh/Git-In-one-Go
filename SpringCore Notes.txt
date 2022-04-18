@@ -87,3 +87,16 @@ There are 3 type of collections:
 	</bean>
 =~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
 WE CAN ALSO CONFIGURE BY USING THE JAVA CLASS AS THE CONFIG CLASS
+we don't need config.xml for that.
+NOTE: context object will be created differently
+ApplicationContext context = new AnnotationConfigApplicationContext(configurationClassName.class);
+to get the bean we use-
+	OurClass object = context.getBean("methodNameInTheConfigClass",ClassName.class);
+IN THE CONFIGUATION CLASS:
+	we use @Configuration annotation to tell IOC this is a config class
+	we create method which return the object of the required classes
+	these objects are then used by the IOC container.
+	IOC find the right object by comparing the object returned with the type of object required.
+@ComponentScan(basePackages = "the package you want to search for the methods that return objects")
+NOTE: we can omit the use of the @ComponentScan if we use @Bean annotation
+ @Bean : use this on the method that return the objects, those objects than will be used by the IOC container
