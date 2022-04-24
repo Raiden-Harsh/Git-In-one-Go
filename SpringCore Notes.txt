@@ -170,3 +170,30 @@ It can be done by two ways:
 		public boolean c;
 
 =~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
+-------STAND ALONE COLLECTIONS-------------------------------
+They are like Global Collections we don't have to declare them every time locally
+NOTE: We use util schema for creating stand alone collections.
+Examples:
+	>Stand Alone LIST
+	<util:list list-class="java.util.LinkedList" id="nameOfList">
+		<value>xyx</value>
+	</util:list>
+
+	>Stand Alone MAP:
+	<util:map map-class="java.util.HashMap" id="nameOfMap">
+		<entry key="" value="" />
+	</util:map>
+
+	>Stand Alone PROPERTIES:
+	<util:properties id="nameOfProperties">
+		<prop key="">valueForProperty</prop>
+	</util:properites>
+	-----------------------------------------------
+	This is how we pass Stand Alone collections in XML
+	<bean class="" name="">
+		<property name="">
+			<ref bean="nameOfList" />
+		</property>
+		<property name="" ref="nameOfMap" />
+	</bean>
+NOTE: any of the above method can be use to pass reference of the stand alone collections
