@@ -101,3 +101,27 @@ IN THE CONFIGUATION CLASS:
 NOTE: we can omit the use of the @ComponentScan if we use @Bean annotation
  @Bean : use this on the method that return the objects, those objects than will be used by the IOC container
 =~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
+------INIT and DESTROY methods------------------------
+#Init method: These methods will be invoked just before creating a bean.
+							All of the beans that are to be created by the IOC container,
+							there init methods will call first during the runtime.
+#Destroy method: These methods will be called when beans are to get destroyed,
+								 If  the order of creation of beans is 1,2,3 then the order of destruction will be 3,2,1!
+
+There are three ways in which we can declare the init & destroy methods ==>
+	#1 Declaring in XML file.
+	#2 Using methods form the Interface
+	#3 Annotations
+
+	1) Declaring in XML file: we need to declare the methods in the class, then specify that these are init and destroy methods in the xml file.
+		 To declare the method in the xml file:
+		 		<bean class="" name="" init-method="nameOfInitMethodAsDescribedInClass" destroy-method="nameOfDestroyMethodAsDescribedInClass">
+					<property name="" value="" />
+				</bean>
+	2) Using methods from the Interface: we use a DisposableBean interface to implement init and desetroy method.
+		 INIT: public void afterPropertiesSet() throws Exception {}
+		 DESTROY: public void destroy() throws Exception {}
+	3) Annotations: we can use annotations on any method to make them init and destroy
+		 INIT: @PostConstruct
+		 DESTROY: PreDestroy
+		 NOTE: we have to use <context:annotation-config /> in the xml file to enable all annotations 
