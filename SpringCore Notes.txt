@@ -139,3 +139,34 @@ in XML file:
 						</property>
 					</bean>
 =~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
+-----------Spring Expression Language (SPEL)---------------------------------
+It is basically used to inject an expression into an variable,
+The expression can be:
+						> Mathematical
+						> Logical
+						> Some method
+						> constructors etc
+It can be done by two ways:
+#1 Using annotations
+#2 Creating SpelExpressionPareser() object
+
+#1 By Using Annotations:
+		NOTE: We need to PUT @Component on the class on which we need to add SPEL.
+		NOTE: We use #{} to pass any expression with @Value annotation.
+		NOTE: To call an static method or expression we use #{T(class name).method name(parameters if any)}
+		NOTE: To search for Component class we need to put <context:component-scan base-package="package where component class is"/>
+
+		Example:
+		@value("#{23+55(23*32)}") //The value of this complete expression will be added in a
+		private double a;
+
+		@Value("#{T(java.lang.Math).sqrt(25)}") //square root of 25 will be stored in b
+		private double b;
+
+		@Value("#{new java.lang.String("Harsh Vardhan Sharma")}") //new String obj with value as "Harsh Vardhan Sharma" will be created and stored in name
+		private String name;
+
+		@Value("#{5>3}") //boolean true will be stored in c
+		public boolean c;
+
+=~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
