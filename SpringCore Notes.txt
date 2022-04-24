@@ -124,4 +124,18 @@ There are three ways in which we can declare the init & destroy methods ==>
 	3) Annotations: we can use annotations on any method to make them init and destroy
 		 INIT: @PostConstruct
 		 DESTROY: PreDestroy
-		 NOTE: we have to use <context:annotation-config /> in the xml file to enable all annotations 
+		 NOTE: we have to use <context:annotation-config /> in the xml file to enable all annotations
+=~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
+-------Provide The Reference Of One Bean To Another--------------
+NOTE: just make a bean that accept another bean's object as one of it's parameters
+in XML file:
+					<bean class="" name="bean1">
+						<property name="" value="" />
+					</bean>
+					<!-- say other bean take the object of bean1 -->
+					<bean class="" name="bean2">
+						<property name="objectOfAnotherBean">
+							<ref bean="bean1" />
+						</property>
+					</bean>
+=~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
