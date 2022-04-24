@@ -197,3 +197,8 @@ Examples:
 		<property name="" ref="nameOfMap" />
 	</bean>
 NOTE: any of the above method can be use to pass reference of the stand alone collections
+=~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
+--------------STREOTYPE ANNOTATION--------------------
+before using any type of annotation we need to use
+<context:component-scan base-package=""/>
+NOTE: Scope of a bean-
