@@ -202,3 +202,28 @@ NOTE: any of the above method can be use to pass reference of the stand alone co
 before using any type of annotation we need to use
 <context:component-scan base-package=""/>
 NOTE: Scope of a bean-
+		>Singleton		: Only one object is created and same is used
+		>Prototype		: Every time getBean() is called a new object is created
+		>Request  		: Used in web app
+		>Session  		: Used in web app
+		>GlobalSession: Used in portrait application
+--------------------------------------------------------------------
+Some annotations
+@Component("nameOfBean") 								: This annotation is a class level annotation, It is used to tell the IOC
+														 							that this is an bean.
+														 							we can drop the ("nameOfBean") then the name of bean will be the class name in camelCase
+
+@Scope("protrotype") 	   								:	This annotation is also a class level annotation,
+																					It is used to define the scope of the bean.
+@Value("1234")
+or
+@Value("#{listName/method/object/etc}")	: These are used to add values to an variable in class.
+																					@Value("#{}") this is used for spring expression language "SPEL"
+
+NOTE: even in the config.xml file we can define the scope of the bean like this-
+			<bean class="" name="" scope="" />
+=~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
+=~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
+=~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
+=~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~==~=~=~=~=~=~=~=~=~=~=~=~=~=~=
+*****************************************END****************************************************************************
