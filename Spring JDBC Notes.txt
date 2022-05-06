@@ -1,0 +1,32 @@
+JDBC stands for Java Database Connectivity
+Basic Class Structure we need is-
+  >com.spring.jdbc.entities=>
+    >Entity class/classes : they contain the fields that are to be added in the database.
+  >com.spring.jdbc.Dao=>
+    >RowMapperImpl : it is an implementation of the RowMapper Interface.
+                     it is used to map the data form DB to an object of the entity class.
+    >Dao Interface : DAO is Data Access Object, It contains definition of the CRUD methods.
+    > Dao impl     : This class contains all the implementations of the Dao interface, It
+                     needs the jdbc template object, which will be autowired.
+  >com.srping.jdbc =>
+    >App           : It contains the main method. If we are using the XML file we have to create a new
+                     ClassPathXmlApplicationContext(path/to/config.xml) object.
+                     If we are using the the annotation class we have to create a new,
+                     AnnotationConfigApplicationContext(config.class) object.
+                     We have to use context to get DaoImpl bean, and we use this bean to do the CRUD operations.
+    >jdbcConfig    : This is the class we use to make configuration,we need @Configuration and @Componetscan annotations
+                     we need to beans, DriverManagerDataSource and JdbcTemplate
+
+    >config.xml    : This is the configuration XML file, It contains beans for Datasources, jdbc template, daoimpl.
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+***com.spring.jdbc.entities***
+
+  >Entities Class/es :: It contains all the private fields that are required by the Database,
+                        there getters and setters and an overridden toString method.
+
+
+***com.spring.jdbc.Dao***
+
+  >RowMapperImpl :: It implements springfaramework.jdbc.core.RowMapper<EntityClassName>
+                    
