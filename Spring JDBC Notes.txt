@@ -28,5 +28,112 @@ Basic Class Structure we need is-
 
 ***com.spring.jdbc.Dao***
 
-  >RowMapperImpl :: It implements springfaramework.jdbc.core.RowMapper<EntityClassName>
-                    
+  >RowMapperImpl :: It implements springfaramework.jdbc.core.RowMapper<EntityClassName>,
+                    it is basically used for collecting the data from the database and putting that data in an object.
+                    It contains a overridden map row method, which returns the object of the entity class,
+                    it takes two parameters ResultSet rs, and int rowNum and throws SQLException.
+                    >>To get the data into the object form the database:
+                      >Make a new Entity class Object
+                      >use setter method to set data in the Object
+                      >to fetch data form server use ResultSet object rs with .getInt() or .getString() methods
+                      EX:
+                        student.setId(rs.getInt(1));
+                        here,
+                            student is the newly created object of the entity class,
+                            .setId() is the setter methods
+                            rs.getInt(1) is the ResultSet method which takes the row number as the parameter,
+                            the data at row #1 will be fetched form DB and putted in the ID attribute of student object.
+  >StudentDao     :: It is an interface that contains all the CRUD methods, like
+                     insert,change,delete,getStudents,
+                     EX:
+                      public int insert(Student student);
+                      here,
+                          the return type is int as it will return the number of rows changed,
+                          it is taking an object of the entity class.
+
+  >StudentDaoImpl :: It is the class that implements studentDao interface, it contains all the implementations of crud methods
+                     It uses @Component annotation as it needs to autowire JdbcTemplate object.
+                     It contains all the CRUD operations methods like insert, change, delete, selectAll etc.
+                     EX:
+                      public int insert(Student student){
+                        //Insert Query
+                        String insertQuery = "INSERT INTO student(id,name,city) VALUES (?,?,?)";
+                        int r = this.jdbcTemplate.update(insetQuery,student.getId(),student.getName(),student.getCity());
+                        return r;
+                      }
+                      here,
+                          the insertQuery String is a simple SQL Query.
+                          .update()method is a jdbcTemplate method which take parameters as -
+                            Query as string, student is object of Student which is used to called getter methods for the attributes.
+                      -----------------------------------
+                      NOTE: To select data we have to use rowMapper object.
+                      EX:
+                       public Student getStudent(int studentId){
+                        String selectQuery = "SELECT * FROM student WHERE Id=?"
+                        RowMapper<Student> rowMapper = new RowMapperImpl();
+                        Student student = this.jdbcTemplate.queryForObject(selectQuery,rowMapper,studentId);
+                        return student;
+                       }
+***com.spring.jdbc***
+
+  >App                : This class contains the main function.
+                        it can be done by two ways depending if we are using the configuration XML file or a component class.
+                        > If we are using an  XML file...
+                          make a new context object of ClassPathXmlApplicationContext("path/config.xml")
+                          then we use context to get the bean of StudentDaoImpl.
+                          we use this daoImpl object to call the CRUD methods(and create student/entity objects if necessary)
+                        > If we are using the @Configuration class,
+                          we make the context object by AnnotationConfigApplicationContext(config.class),
+                          rest will be same.
+  >jdbcConfig         : This is used to create the java configuration class,
+                        there are two annotations used here,
+                        @Configuration => this tells the spring that it is an configuration class,
+                        @ComponentScan(basePackages ={"name.of.package"}) => this is used to tell the IOC container to look into the
+                        base package and all its sub packages, for any injection that is required.
+
+                        now we create two beans viz, jdbctemplate and datasource
+                        @Bean is used to mark a function as bean, the value that this function will return will be considered as a bean by the ioc container
+                        EX:
+                          @Bean("dataSource")
+                          public DariverManagerDataSource getDataSource(){
+                            DriverManagerDataSource datasource = new DriverManagerDataSource();
+                            datasorce.setDriverClassName("com.mysql.cj.jdbc.Driver");
+                            datasource.setUrl("jdbc:mysql://localhost:3306/springjdbc");
+                            datasource.setUserName("username of your databse");
+                            datasource.setUserPassword("password of your database");
+                            return datasource;
+                          }
+                          @Bean("jdbcTemplate")
+                          public JdbcTemplate getJdbcTemplate(){
+                            JdbcTemplate jdbcTemplate = new JdbcTemplate();
+                            jdbcTemplate.setDataSource(getDataSource());
+                            return jdbcTemplate();
+                          }
+                          NOTE: If we were not using autowiring in the student dao Impl of jdbcTemplate, we have to create yet another bean of studentDaoImpl.
+
+  >config.xml        : It is an xml file which contains the bean declaration, for the jdbc template.
+                       we have to create 3 separate beans:
+                          1: Datasource
+                          2: jdbcTemplate
+                          3: StudentDao
+                       The values will be same as the configuration class.
+                       EX:
+                        <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" name="datasource">
+                          <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+                          <property name="url" value="jdbc:mysql://loclahost:3306/springjdbc"/>
+                          <property name="username" value="name of database"/>
+                          <property name="password" value="password of database" />
+                        </bean>
+                        <bean class="org.springframework.jdbc.core.JdbcTemplate" name="jdbcTemplate">
+                          <property name="datasource">
+                            <ref bean="datasource"/>
+                          </property>
+                        </bean>
+                        <bean class="com.spring.jdbc.Dao.StudentDaooImpl" name="StudentDao">
+                          <property name="jdbcTemplate" ref ="jdbcTemplate"/>
+                        </bean>
+
+
+                      Then we use this xml file in our main method. while using the ClassPathXmlApplicationContext(here this xml address).
+
+**********************************************************END**************************************************************************************************
